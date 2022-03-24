@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WireLabel.Services;
+using WireLabel.Services.Interfaces;
 
 namespace WireLabel;
 
@@ -26,5 +27,6 @@ public class Program
 
     private static void ConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
     {
+        services.AddScoped<IFileService, FileService>();
     }
 }
