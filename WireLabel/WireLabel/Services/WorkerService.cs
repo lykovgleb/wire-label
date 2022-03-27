@@ -25,6 +25,32 @@ public class WorkerService
 
             if (command == "exit")
                 isWorking = false;
+
+            if (command == "set folder path")
+            {
+                Console.WriteLine("Enter path");
+                path = Console.ReadLine();
+
+                using (StreamWriter writer = new StreamWriter("MyDir\\path.txt", false))
+                {
+                    writer.WriteLine(path);
+                }
+            }
+
+            if (command == "Show folder path")
+            {
+                using (StreamReader reader = new StreamReader("MyDir\\path.txt"))
+                {
+                    string text = reader.ReadToEnd();
+                    Console.WriteLine(text);
+                }
+            }
+
+            if (command == "Parse")
+            {
+                FileService fileService = new FileService();
+                fileService.Parse();
+            }
         }
     }
 }
