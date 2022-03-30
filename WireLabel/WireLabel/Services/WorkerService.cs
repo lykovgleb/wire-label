@@ -16,40 +16,41 @@ public class WorkerService
 
     public void Start()
     {
-        var path = _configuration["SavePath"];
+        var savePath = _configuration["SavePath"];
         bool isWorking = true;
         while (isWorking)
-        {
-            Console.WriteLine("Enter command: ");
+        { 
+            Console.WriteLine("Enter command:");
             var command = Console.ReadLine();
-
-            if (command == "exit")
-                isWorking = false;
-
-            if (command == "set folder path")
+            
+            if (command is not null) //Почему выполняется при пустой строке?
             {
-                Console.WriteLine("Enter path");
-                path = Console.ReadLine();
-
-                using (StreamWriter writer = new StreamWriter("MyDir\\path.txt", false))
+                command = command.ToLower();
+                switch (command)
                 {
-                    writer.WriteLine(path);
-                }
-            }
+                    case "exit":
+                        isWorking = false;
+                        break;
 
-            if (command == "Show folder path")
-            {
-                using (StreamReader reader = new StreamReader("MyDir\\path.txt"))
-                {
-                    string text = reader.ReadToEnd();
-                    Console.WriteLine(text);
-                }
-            }
+                    case "set folder path":
+                        Console.WriteLine("Enter path:");
+                        var path = Console.ReadLine();
+                        if (path is not null)
+                            Console.WriteLine(_fileService.SetPath(path, savePath));
+                        break;
 
-            if (command == "Parse")
-            {
-                FileService fileService = new FileService();
-                fileService.Parse();
+                    case "show folder path":
+                        Console.WriteLine(_fileService.ShowPath(savePath));
+                        break;
+
+                    case "parse":
+                        _fileService.Parse();
+                        break;
+
+                    default:
+                        Console.WriteLine("Unknown command");
+                        break;
+                }
             }
         }
     }
