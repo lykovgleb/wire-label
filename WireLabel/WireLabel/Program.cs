@@ -2,7 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WireLabel.Services;
-using WireLabel.Services.Interfaces;
+using WireLabel.BL.Services;
+using WireLabel.BL.Services.Interfaces;
 
 namespace WireLabel;
 

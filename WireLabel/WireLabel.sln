@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WireLabel", "WireLabel\WireLabel.csproj", "{C0B4C2D8-4748-4005-AE12-F89A5AAC140F}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WireLabel", "WireLabel\WireLabel.csproj", "{C0B4C2D8-4748-4005-AE12-F89A5AAC140F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WireLabel.BL", "WireLabel.BL\WireLabel.BL.csproj", "{A0575A94-61AD-408C-974D-156B766CC5A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{C0B4C2D8-4748-4005-AE12-F89A5AAC140F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B4C2D8-4748-4005-AE12-F89A5AAC140F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B4C2D8-4748-4005-AE12-F89A5AAC140F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0575A94-61AD-408C-974D-156B766CC5A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0575A94-61AD-408C-974D-156B766CC5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0575A94-61AD-408C-974D-156B766CC5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0575A94-61AD-408C-974D-156B766CC5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A68D53C-685C-436C-9A45-29BB8B52ABAF}
 	EndGlobalSection
 EndGlobal
