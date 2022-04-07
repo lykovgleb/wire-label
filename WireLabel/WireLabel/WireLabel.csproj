@@ -14,9 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="appsettings.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+      <ProjectReference Include="..\WireLabel.BL\WireLabel.BL.csproj" />
     </ItemGroup>
 
 </Project>

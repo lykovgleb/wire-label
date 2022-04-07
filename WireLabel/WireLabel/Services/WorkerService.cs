@@ -1,57 +1,65 @@
-﻿using Microsoft.Extensions.Configuration;
-using WireLabel.Services.Interfaces;
+﻿using WireLabel.BL.Services.Interfaces;
 
 namespace WireLabel.Services;
 
 public class WorkerService
 {
-    private readonly IConfiguration _configuration;
     private readonly IFileService _fileService;
 
-    public WorkerService(IConfiguration configuration, IFileService fileService)
+    public WorkerService(IFileService fileService)
     {
-        _configuration = configuration;
         _fileService = fileService;
     }
 
     public void Start()
     {
-        var savePath = _configuration["SavePath"];
         bool isWorking = true;
+        const string Exit = "exit";
+        const string SetPath = "set folder path";
+        const string ShowPath = "show folder path";
+        const string Parse = "parse";
+
+        Console.WriteLine("commands:\n{0}\n{1}\n{2}\n{3}", Exit, SetPath, ShowPath, Parse);
+        Console.WriteLine("Path: {0}", _fileService.GetPath());
+
+        
         while (isWorking)
         { 
             Console.WriteLine("Enter command:");
-            var command = Console.ReadLine();
-            
-            if (command is not null) //Почему выполняется при пустой строке?
+            var userCommand = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(userCommand) || string.IsNullOrWhiteSpace(userCommand))
             {
-                command = command.ToLower();
-                switch (command)
-                {
-                    case "exit":
+                Console.WriteLine("Invalid command");
+                continue;
+            }
+
+            userCommand = userCommand.ToLower();
+            switch (userCommand)
+            {
+                    case Exit:
                         isWorking = false;
                         break;
 
-                    case "set folder path":
+                    case SetPath:
                         Console.WriteLine("Enter path:");
                         var path = Console.ReadLine();
-                        if (path is not null)
-                            Console.WriteLine(_fileService.SetPath(path, savePath));
+                        if (!string.IsNullOrEmpty(path) && !string.IsNullOrWhiteSpace(path))
+                            Console.WriteLine(_fileService.SetPath(path));
                         break;
 
-                    case "show folder path":
-                        Console.WriteLine(_fileService.ShowPath(savePath));
+                    case ShowPath:
+                        Console.WriteLine(_fileService.GetPath());
                         break;
 
-                    case "parse":
+                    case Parse:
                         _fileService.Parse();
                         break;
 
                     default:
                         Console.WriteLine("Unknown command");
                         break;
-                }
-            }
+            }    
         }
     }
 }
