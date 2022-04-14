@@ -53,7 +53,7 @@ public class WorkerService
                         break;
 
                     case Parse:
-                        _fileService.Parse();
+                    Console.WriteLine(_fileService.Parse());
                         break;
 
                     default:

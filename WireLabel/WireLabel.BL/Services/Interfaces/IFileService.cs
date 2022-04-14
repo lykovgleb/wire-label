@@ -2,7 +2,7 @@
 
 public interface IFileService
 {
-    void Parse();
+    string Parse();
     string SetPath(string path);
     string GetPath();
 }
