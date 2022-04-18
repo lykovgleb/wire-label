@@ -4,6 +4,11 @@ namespace WireLabel.Services;
 
 public class WorkerService
 {
+    bool isWorking = true;
+    const string Exit = "exit";
+    const string SetPath = "set folder path";
+    const string ShowPath = "show folder path";
+    const string Parse = "parse";
     private readonly IFileService _fileService;
 
     public WorkerService(IFileService fileService)
@@ -13,12 +18,6 @@ public class WorkerService
 
     public void Start()
     {
-        bool isWorking = true;
-        const string Exit = "exit";
-        const string SetPath = "set folder path";
-        const string ShowPath = "show folder path";
-        const string Parse = "parse";
-
         Console.WriteLine("commands:\n{0}\n{1}\n{2}\n{3}", Exit, SetPath, ShowPath, Parse);
         Console.WriteLine("Path: {0}", _fileService.GetPath());
 
