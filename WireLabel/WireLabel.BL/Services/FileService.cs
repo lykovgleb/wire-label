@@ -7,7 +7,7 @@ public class FileService : IFileService
 {
     private const string Success = "success";
     private const string Error = "error";
-    private const string ParsingPathFile = "ParsingPathFile";
+    private const string ParsingPathFile = "ParsingPathFile";    
 
     private readonly IConfiguration _configuration;
     private readonly IPartService _partService;
@@ -20,12 +20,10 @@ public class FileService : IFileService
 
     public string Parse()
     {
-
         var path = GetPath();
-        var allVariants = _partService.GetReadingList(path);
+        var allVariants = GetReadingList(path);
         var partList = _partService.GetPartList(allVariants);
         return Success;
-
     }
 
     public string SetPath(string path)
@@ -51,5 +49,31 @@ public class FileService : IFileService
         string path = reader.ReadToEnd();
         reader.Close();
         return path;
+    }
+    public bool IsPathFileExist()
+    {
+        if (File.Exists(_configuration[ParsingPathFile]))
+            return true;
+        return false;
+    }
+
+    private IList<List<string>> GetReadingList(string path)
+    {
+        var allVariants = new List<List<string>>();
+        var files = Directory.GetFiles(path);
+        foreach (string file in files)
+        {
+            var variantLines = new List<string>();
+            var reader = new StreamReader(file);
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                if (!string.IsNullOrEmpty(line) && !string.IsNullOrWhiteSpace(line))
+                    variantLines.Add(line);
+            }
+            reader.Close();
+            allVariants.Add(variantLines.ToList());
+        }
+        return allVariants;
     }
 }

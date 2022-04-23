@@ -12,7 +12,6 @@ namespace WireLabel.BL.Models
         public string Name { get; set; }
         public string NumberOfVariants { get; set; }
         public string Module { get; set; }
-        public string Layer { get; set; }
-        public IList<string> KlipComposition { get; set; }
+        public IList<string> SpliceComposition { get; set; }
     }
 }
