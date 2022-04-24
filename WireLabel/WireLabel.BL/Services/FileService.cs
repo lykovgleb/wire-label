@@ -1,24 +1,29 @@
-﻿using WireLabel.BL.Services.Interfaces;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using WireLabel.BL.Services.Interfaces;
 
 namespace WireLabel.BL.Services;
 
 public class FileService : IFileService
 {
-    private const string ParsingPathFile = "ParsingPathFile";
-    private readonly IConfiguration _configuration;
+    private const string Success = "success";
+    private const string Error = "error";
+    private const string ParsingPathFile = "ParsingPathFile";    
 
-    public FileService(IConfiguration configuration)
+    private readonly IConfiguration _configuration;
+    private readonly IPartService _partService;
+
+    public FileService(IConfiguration configuration, IPartService partService)
     {
         _configuration = configuration;
+        _partService = partService;
     }
-   
-    public void Parse()
+
+    public string Parse()
     {
-        if (File.Exists(_configuration[ParsingPathFile]))
-        {
-            Console.WriteLine("Parsing");
-        }
+        var path = GetPath();
+        var allVariants = GetReadingList(path);
+        var partList = _partService.GetPartList(allVariants);
+        return Success;
     }
 
     public string SetPath(string path)
@@ -26,28 +31,49 @@ public class FileService : IFileService
         var savePath = _configuration[ParsingPathFile];
         if (Directory.Exists(path))
         {
-            using StreamWriter writer = new(savePath, false);
+            StreamWriter writer = new(savePath, false);
             writer.Write(path);
-            return "Path set";
+            writer.Close();
+            return Success;
         }
         else
         {
-            return "Folder not found";
+            return Error;
         }
     }
 
     public string GetPath()
     {
+        var savePath = _configuration[ParsingPathFile];
+        StreamReader reader = new(savePath);
+        string path = reader.ReadToEnd();
+        reader.Close();
+        return path;
+    }
+    public bool IsPathFileExist()
+    {
         if (File.Exists(_configuration[ParsingPathFile]))
+            return true;
+        return false;
+    }
+
+    private IList<List<string>> GetReadingList(string path)
+    {
+        var allVariants = new List<List<string>>();
+        var files = Directory.GetFiles(path);
+        foreach (string file in files)
         {
-            var savePath = _configuration[ParsingPathFile];
-            using StreamReader reader = new(savePath);
-            string text = reader.ReadToEnd();
-            return text;
+            var variantLines = new List<string>();
+            var reader = new StreamReader(file);
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                if (!string.IsNullOrEmpty(line) && !string.IsNullOrWhiteSpace(line))
+                    variantLines.Add(line);
+            }
+            reader.Close();
+            allVariants.Add(variantLines.ToList());
         }
-        else
-        {
-            return "Path not set";
-        }
+        return allVariants;
     }
 }

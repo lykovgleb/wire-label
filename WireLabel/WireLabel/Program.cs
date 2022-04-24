@@ -29,5 +29,6 @@ public class Program
     private static void ConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
     {
         services.AddScoped<IFileService, FileService>();
+        services.AddScoped<IPartService, PartService>();
     }
 }
