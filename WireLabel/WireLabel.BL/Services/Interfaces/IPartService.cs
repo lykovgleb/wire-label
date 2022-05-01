@@ -4,7 +4,7 @@ namespace WireLabel.BL.Services.Interfaces;
 
 public interface IPartService
 {
-    IList<List<Part>> GetPartList(IList<List<string>> allVariants);
+    List<List<Part>> GetPartList(List<List<string>> allVariants);
 
 }
 

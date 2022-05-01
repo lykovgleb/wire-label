@@ -23,12 +23,13 @@ public class Program
             .Build()
             .Services
             .GetService<WorkerService>()
-            ?.Start();
+            ?.ReceiveCommand();
     }
 
     private static void ConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
     {
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<IPartService, PartService>();
+        services.AddScoped<ILabelService, LabelService>();
     }
 }
