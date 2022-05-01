@@ -12,16 +12,16 @@ public class PartService : IPartService
     private const int PartNumberLength = 14;
     private const int NameIndex = 128;
     private const int NameLength = 11;
-    private const int NumberOfLineWithModul = 4;
-    private const int ModulLength = 44;
+    private const int NumberOfLineWithModule = 4;
+    private const int ModuleLength = 44;
 
-    public IList<List<Part>> GetPartList(IList<List<string>> allVariants)
+    public List<List<Part>> GetPartList(List<List<string>> allVariants)
     {
         var partList = new List<List<Part>>();
         foreach (var variantLines in allVariants)
         {
             var parts = new List<Part>();
-            var moduleAndNumberOfVariant = variantLines[NumberOfLineWithModul][..ModulLength].Trim();
+            var moduleAndNumberOfVariant = variantLines[NumberOfLineWithModule][..ModuleLength].Trim();
             var numberOfVariant = moduleAndNumberOfVariant[(moduleAndNumberOfVariant.LastIndexOf(' ') + 1)..];
             var module = moduleAndNumberOfVariant[..moduleAndNumberOfVariant.LastIndexOf(' ')];
             for (int i = 0; i < variantLines.Count; i++)
@@ -31,17 +31,17 @@ public class PartService : IPartService
                     var part = new Part
                     {
                         Module = module,
-                        NumberOfVariants = numberOfVariant,
+                        NumberOfVariant = numberOfVariant,
                         PartNumber = variantLines[i].Substring(PartNumberIndex, PartNumberLength).Trim(),
                         Name = variantLines[i].Substring(NameIndex, NameLength).Trim()
                     };
                     if (part.PartNumber.StartsWith(SpliceNumberStartWith))
                     {
                         part.SpliceComposition = new List<string>();
-                        for (int j = i+1; j < variantLines.Count; j++)
+                        for (int j = i + 1; j < variantLines.Count; j++)
                         {
                             if (variantLines[j].StartsWith(SecondLayer))
-                            {                             
+                            {
                                 var spliceWire = variantLines[j].Substring(NameIndex, NameLength).Trim();
                                 if (!string.IsNullOrEmpty(spliceWire) && !string.IsNullOrWhiteSpace(spliceWire))
                                     part.SpliceComposition.Add(spliceWire);
@@ -56,7 +56,7 @@ public class PartService : IPartService
                     parts.Add(part);
                 }
             }
-            partList.Add(parts.ToList());            
+            partList.Add(parts.ToList());
         }
         return partList;
     }

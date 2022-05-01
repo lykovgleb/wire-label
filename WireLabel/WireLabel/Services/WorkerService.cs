@@ -16,7 +16,7 @@ public class WorkerService
         _fileService = fileService;
     }
 
-    public void Start()
+    public void ReceiveCommand()
     {
         Console.WriteLine("commands:\n{0}\n{1}\n{2}\n{3}", Exit, SetPath, ShowPath, Parse);
         if (_fileService.IsPathFileExist())

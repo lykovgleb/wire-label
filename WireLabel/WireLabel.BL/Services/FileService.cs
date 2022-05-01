@@ -11,11 +11,13 @@ public class FileService : IFileService
 
     private readonly IConfiguration _configuration;
     private readonly IPartService _partService;
+    private readonly ILabelService _labelService;
 
-    public FileService(IConfiguration configuration, IPartService partService)
+    public FileService(IConfiguration configuration, IPartService partService, ILabelService labelService)
     {
         _configuration = configuration;
         _partService = partService;
+        _labelService = labelService;
     }
 
     public string Parse()
@@ -23,6 +25,7 @@ public class FileService : IFileService
         var path = GetPath();
         var allVariants = GetReadingList(path);
         var partList = _partService.GetPartList(allVariants);
+        var labelList = _labelService.GetLabelList(partList);
         return Success;
     }
 
@@ -52,12 +55,10 @@ public class FileService : IFileService
     }
     public bool IsPathFileExist()
     {
-        if (File.Exists(_configuration[ParsingPathFile]))
-            return true;
-        return false;
+        return File.Exists(_configuration[ParsingPathFile]);
     }
 
-    private IList<List<string>> GetReadingList(string path)
+    private List<List<string>> GetReadingList(string path)
     {
         var allVariants = new List<List<string>>();
         var files = Directory.GetFiles(path);
