@@ -5,7 +5,12 @@ namespace WireLabel.BL.Services;
 
 public class LabelService : ILabelService
 {
-    public List<List<Label>> GetLabelList(List<List<Part>> partList)
+    private readonly IExcelService _ExcelService;
+    public LabelService(IExcelService excelService)
+    {
+        _ExcelService = excelService;
+    }
+    public void GetLabels(List<List<Part>> partList, string path)
     {
         var labelsList = new List<List<Label>>();
         while (partList.Count() > 0)
@@ -14,7 +19,7 @@ public class LabelService : ILabelService
                 .Where(p => p.Any(x => x.Module.Equals(partList.First().First().Module)))
                 .SelectMany(x => x)
                 .ToList();
-            var LabelsForOneWorkplace = new List<Label>();
+            var labelsForOneWorkplace = new List<Label>();
             for (int i = 0; i < allVariantsInModuleList.Count; i++)
             {
                 var label = new Label
@@ -39,12 +44,12 @@ public class LabelService : ILabelService
                     j--;
                 }
                 label.NumberOfVariants.Sort();
-                LabelsForOneWorkplace.Add(label);
+                labelsForOneWorkplace.Add(label);
             }
             //ToDo: Replace to excel service
-            labelsList.Add(LabelsForOneWorkplace.ToList());
+            _ExcelService.MadeExcelFile(labelsForOneWorkplace, path);
+            //labelsList.Add(LabelsForOneWorkplace.ToList());
             partList.RemoveAll(p => p.Any(x => x.Module.Equals(partList.First().First().Module)));
-        }
-        return labelsList;
+        }       
     }
 }

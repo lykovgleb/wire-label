@@ -4,6 +4,6 @@ namespace WireLabel.BL.Services.Interfaces
 {
     public interface ILabelService
     {
-        List<List<Label>> GetLabelList(List<List<Part>> partList);
+        void GetLabels(List<List<Part>> partList, string path);
     }
 }
