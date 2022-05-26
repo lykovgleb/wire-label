@@ -4,6 +4,6 @@ namespace WireLabel.BL.Services.Interfaces
 {
     public interface IExcelService
     {
-        public void MadeExcelFile(List<Label> labelsForOneWorkplace, string path);
+        public void MakeExcelFile(List<Label> labelsForOneWorkplace, string path);
     }
 }

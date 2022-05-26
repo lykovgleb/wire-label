@@ -25,6 +25,8 @@ public class LabelService : ILabelService
                 var label = new Label
                 {
                     PartNumber = allVariantsInModuleList[i].PartNumber,
+                    Type = allVariantsInModuleList[i].Type,
+                    DrowingNumber = allVariantsInModuleList[i].DrowingNumber,
                     Module = allVariantsInModuleList[i].Module,
                     SpliceComposition = allVariantsInModuleList[i].SpliceComposition,
                     NumberOfVariants = new List<string>(),
@@ -45,10 +47,8 @@ public class LabelService : ILabelService
                 }
                 label.NumberOfVariants.Sort();
                 labelsForOneWorkplace.Add(label);
-            }
-            //ToDo: Replace to excel service
-            _ExcelService.MadeExcelFile(labelsForOneWorkplace, path);
-            //labelsList.Add(LabelsForOneWorkplace.ToList());
+            }            
+            _ExcelService.MakeExcelFile(labelsForOneWorkplace, path);            
             partList.RemoveAll(p => p.Any(x => x.Module.Equals(partList.First().First().Module)));
         }       
     }

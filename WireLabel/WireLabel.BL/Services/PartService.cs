@@ -10,8 +10,12 @@ public class PartService : IPartService
     private const char SpliceNumberStartWith = '5';
     private const int PartNumberIndex = 17;
     private const int PartNumberLength = 14;
+    private const int TypeIndex = 31;
+    private const int TypeLength = 29;
     private const int NameIndex = 128;
     private const int NameLength = 11;
+    private const int DrowingNumberIndex = 31;
+    private const int DrowingNumberLength = 29;
     private const int NumberOfLineWithModule = 4;
     private const int ModuleLength = 44;
 
@@ -33,6 +37,8 @@ public class PartService : IPartService
                         Module = module,
                         NumberOfVariant = numberOfVariant,
                         PartNumber = variantLines[i].Substring(PartNumberIndex, PartNumberLength).Trim(),
+                        Type = variantLines[i].Substring(TypeIndex, TypeLength).Trim(),
+                        DrowingNumber = variantLines[i+1].Trim(),
                         Name = variantLines[i].Substring(NameIndex, NameLength).Trim()
                     };
                     if (part.PartNumber.StartsWith(SpliceNumberStartWith))
