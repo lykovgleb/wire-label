@@ -31,5 +31,6 @@ public class Program
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<IPartService, PartService>();
         services.AddScoped<ILabelService, LabelService>();
+        services.AddScoped<IExcelService, ExcelService>();
     }
 }

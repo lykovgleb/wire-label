@@ -22,10 +22,10 @@ public class FileService : IFileService
 
     public string Parse()
     {
-        var path = GetPath();
+        var path = GetPath();        
         var allVariants = GetReadingList(path);
         var partList = _partService.GetPartList(allVariants);
-        var labelList = _labelService.GetLabelList(partList);
+        _labelService.GetLabels(partList, path);
         return Success;
     }
 
